@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model ExampleModel
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Example";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <h2>StringLocalizer - no arguments</h2>
+        <p>@Model.StringLocalizedNoArguments</p>
+    </div>
+    <div class="col-xs-12">
+        <h2>StringLocalizer with arguments</h2>
+        <p>@Model.StringLocalizedWithArguments</p>
+    </div>
+    <div class="col-xs-12">
+        <h2>StringLocalizer no argument, curly bracers</h2>
+        <p>@Model.StringLocalizedNoArgumentsCurly</p>
+    </div>
+    <div class="col-xs-12">
+        <h2>ViewLocalizer - no arguments</h2>
+        <p>@Localizer["NoArguments"]</p>
+    </div>
+    <div class="col-xs-12">
+        <h2>ViewLocalizer with arguments</h2>
+        <p>@Localizer["WithArguments", Model.Argument]</p>
+    </div>
+    <div class="col-xs-12">
+        @if (Model.Curly)
+        {
+            <h2>ViewLocalizer no argument, curly bracers</h2>
+            <p>@Localizer["NoArgumentsJson"]</p>
+        }else
+        {
+            <p>click <a asp-action="Index" asp-route-curly="true">here</a> to see IViewLocalizer error</p>
+        }
+    </div>
+</div>
