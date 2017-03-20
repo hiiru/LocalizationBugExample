@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LocalizationExample.MvcLocalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace LocalizationExample
 {
@@ -29,6 +27,9 @@ namespace LocalizationExample
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.Add(ServiceDescriptor.Singleton<IHtmlLocalizerFactory, MyHtmlLocalizerFactory>());
+
             // Add framework services.
             services.AddMvc().AddViewLocalization(
                 LanguageViewLocationExpanderFormat.Suffix,
@@ -41,7 +42,7 @@ namespace LocalizationExample
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            
+
             app.UseDeveloperExceptionPage();
 
             app.UseStaticFiles();
